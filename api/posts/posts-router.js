@@ -51,4 +51,20 @@ router.post('/', (req,res)=>{
         })
 })
 
+//4. Edit a post 
+router.put('/:id',(req,res)=>{
+    const postId = req.params.id;
+    const postChanges = req.body;
+    Posts.update(postId, postChanges)
+        .then((post)=>{
+            if(!postId || !postChanges){
+                res.status(404).json({ message: "The post with the specified ID does not exist" })
+            } else{
+                res.status(200).json(postChanges)
+            }
+        }) .catch((error)=>{
+            res.status(404).json({message:`error updating`})
+        })
+})
+
 module.exports = router;
