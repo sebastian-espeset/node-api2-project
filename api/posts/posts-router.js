@@ -36,4 +36,19 @@ router.get('/:id', (req,res)=>{
         });
 })
 
+//3.Create a post 
+router.post('/', (req,res)=>{
+    const {title, contents} = req.body;
+    Posts.insert(req.body)
+        .then(post=>{
+            if(!title || !contents){
+                res.status(400).json({message:`Please provide title and contents for the post`})
+            } else{
+                res.status(201).json(post)
+            }
+        }) .catch(error=>{
+            res.status(500).json({message:`${error}`})
+        })
+})
+
 module.exports = router;
