@@ -82,4 +82,19 @@ router.delete('/:id',(req,res)=>{
         })
 })
 
+//6. Get post comments
+router.get('/:id/comments',(req,res)=>{
+    const postId = req.params.id;
+    Posts.findPostComments(postId)
+        .then(postComment=>{
+            if(!postId){
+                res.status(404).json(`{message: The post with the specified ID does not exist}`)
+            }else{
+                res.status(200).json(postComment)
+            }
+        }) .catch(error=>{
+            res.status(500).json(`{message:The comments information could not be retrieved}`)
+        })
+})
+
 module.exports = router;
