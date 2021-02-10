@@ -20,7 +20,7 @@ router.get('/',(req,res)=>{
         .catch((error)=>{
             res.status(400).json({message:`${error}`})
         })
-})
+});
 
 //2.fetching specific post via id
 router.get('/:id', (req,res)=>{
@@ -34,7 +34,7 @@ router.get('/:id', (req,res)=>{
         }) .catch(error=>{
             res.status(500).json({message:`${error}`})
         });
-})
+});
 
 //3.Create a post 
 router.post('/', (req,res)=>{
@@ -49,7 +49,7 @@ router.post('/', (req,res)=>{
         }) .catch(error=>{
             res.status(500).json({message:`${error}`})
         })
-})
+});
 
 //4. Edit a post 
 router.put('/:id',(req,res)=>{
@@ -80,7 +80,7 @@ router.delete('/:id',(req,res)=>{
         }) .catch(error=>{
             res.status(500).json({message:`The post could not be removed`})
         })
-})
+});
 
 //6. Get post comments
 router.get('/:id/comments',(req,res)=>{
@@ -94,6 +94,17 @@ router.get('/:id/comments',(req,res)=>{
             }
         }) .catch(error=>{
             res.status(500).json(`{message:The comments information could not be retrieved}`)
+        })
+});
+
+//7. Insert comment
+router.post('/:id/comments',(req,res)=>{
+    postId=req.params.id;
+    Posts.insertComment(req.body)
+        .then(post=>{
+            res.status(200).json(post)
+        }) .catch(error=>{
+            res.status(404).json(`comment not posted`)
         })
 })
 
